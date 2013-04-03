@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Runtime.Serialization;
 namespace Dumsy2
 {
+    [DataContract]
     public class Movie
     {
+        [DataMember]
         public string Title { get; set; }
+        [DataMember]
         public string Language { get; set; }
+        [DataMember]
         public string Genre { get; set; }
+        [DataMember]
         public string YearOfRelease { get; set; }
+        [DataMember]
         public string Level { get; set; }
+        [DataMember]
         public string Cast { get; set; }
+        [DataMember]
         public Guid MovieIdentifier { get; set; }
 
         public static string RemoveSpecialCharacters(string str)

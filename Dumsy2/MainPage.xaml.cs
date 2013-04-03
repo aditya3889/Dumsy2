@@ -62,7 +62,7 @@ namespace Dumsy2
                 if (themeColor.ToString() != "#FFFFFFFF")
                 {
                     Microsoft.Phone.Shell.ApplicationBarIconButton b = new Microsoft.Phone.Shell.ApplicationBarIconButton();
-                    b.Text = "Next";
+                    b.Text = "Save";
                     b.IconUri = new Uri("Images/Light/appbar.save.rest.png", UriKind.Relative);
                     b.Click += Save_Settings;
                     ApplicationBar.Buttons.Add(b);
@@ -70,7 +70,7 @@ namespace Dumsy2
                 else
                 {
                     Microsoft.Phone.Shell.ApplicationBarIconButton b = new Microsoft.Phone.Shell.ApplicationBarIconButton();
-                    b.Text = "Next";
+                    b.Text = "Save";
                     b.IconUri = new Uri("Images/Dark/appbar.save.rest.png", UriKind.Relative);
                     b.Click += Save_Settings;
                     ApplicationBar.Buttons.Add(b);
@@ -87,6 +87,7 @@ namespace Dumsy2
             {
                 startDatetime = DateTime.UtcNow;
                 endDateTime = startDatetime.Value.AddMinutes(2);
+                Timer.Foreground =  new SolidColorBrush(Color.FromArgb(255,0,255,0));
             }
         }
         void dt_Tick(object sender, EventArgs e)
@@ -100,6 +101,11 @@ namespace Dumsy2
                 else
                 {
                     int seconds = (int)((endDateTime.Value - DateTime.UtcNow).TotalSeconds);
+                    if (seconds <= Constants.WarningTime)
+                    {
+                        Timer.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+                    }
+
                     Timer.Text = String.Format("{0}:{1:D2}", seconds / 60, seconds % 60);
                 }
             }
@@ -111,6 +117,12 @@ namespace Dumsy2
             string difficultyLevel = difficulty[this.SelectedDifficulty.SelectedIndex].ToString();
             Helpers.SetValueToStorage(Constants.DifficultySetting, difficultyLevel);
             Helpers.SetValueToStorage(Constants.LanguageSetting, language);
+
+            this.Panorama.SetValue(Panorama.SelectedItemProperty, this.Panorama.Items[0]);
+            Panorama temp = this.Panorama;
+            LayoutRoot.Children.Remove(this.Panorama);
+            LayoutRoot.Children.Add(temp);
+            LayoutRoot.UpdateLayout();
         }
 
         private void PhoneApplicationPage_Loaded_1(object sender, RoutedEventArgs e)
@@ -145,7 +157,7 @@ namespace Dumsy2
             {
                 difficulty = new List<string>();
                 difficulty.Add("Easy");
-                difficulty.Add("Difficult");
+                difficulty.Add("Tough");
                 difficulty.Add("Random");
 
                 this.SelectedDifficulty.ItemsSource = difficulty;

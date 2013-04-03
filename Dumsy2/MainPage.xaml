@@ -33,13 +33,13 @@
                     </Grid.ColumnDefinitions>
                         <StackPanel Grid.ColumnSpan="2">
                             <TextBlock x:Name="MovieName" FontSize="{StaticResource PhoneFontSizeLarge}" TextWrapping="Wrap" Grid.Row="0" HorizontalAlignment="Center" Text=""/>
-                            <HyperlinkButton x:Name="MoreInfo" FontSize="{StaticResource PhoneFontSizeLarge}" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,20,0" Content="More Info.." Visibility="Collapsed" Click="MoreInfo_Click"/>
-                            <TextBlock x:Name="Genre" FontSize="{StaticResource PhoneFontSizeLarge}" TextWrapping="Wrap" Grid.Row="0" HorizontalAlignment="Center" Text=""/>
-                            <TextBlock x:Name="Year" FontSize="{StaticResource PhoneFontSizeLarge}" TextWrapping="Wrap" Grid.Row="0" HorizontalAlignment="Center" Text=""/>
-                            <TextBlock x:Name="Cast" FontSize="{StaticResource PhoneFontSizeLarge}" TextWrapping="Wrap" Grid.Row="0" HorizontalAlignment="Center" Text=""/>
+                            <HyperlinkButton x:Name="MoreInfo" FontSize="{StaticResource PhoneFontSizeMedium}" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,20,0" Content="More Info.." Visibility="Collapsed" Click="MoreInfo_Click"/>
+                        <TextBlock x:Name="Genre" FontSize="{StaticResource PhoneFontSizeMedium}" TextWrapping="Wrap" Grid.Row="0" HorizontalAlignment="Center" Text=""/>
+                        <TextBlock x:Name="Year" FontSize="{StaticResource PhoneFontSizeMedium}" TextWrapping="Wrap" Grid.Row="0" HorizontalAlignment="Center" Text=""/>
+                        <TextBlock x:Name="Cast" FontSize="{StaticResource PhoneFontSizeMedium}" TextWrapping="Wrap" Grid.Row="0" HorizontalAlignment="Center" Text=""/>
 
                     </StackPanel>
-                    <TextBlock x:Name="Timer" Grid.Row ="2" Width="200" Height ="100" Grid.ColumnSpan="2" Style="{StaticResource PhoneTextTitle1Style}"/>
+                    <TextBlock x:Name="Timer" Grid.Row ="2" Width="200" Height ="100" Grid.ColumnSpan="2" Style="{StaticResource PhoneTextTitle1Style}" Margin="20,0,0,0"/>
                 </Grid>
                 </controls:PanoramaItem>
 

@@ -18,6 +18,8 @@ namespace Dumsy2
         public const string LanguageSetting = "languagesetting";
         public const string DifficultySetting = "difficultysetting";
 
+        public const int WarningTime = 15;
+
         public const int CurrentMovieVersion = 1;
         public const string MovieVersion = "MovieVersion";
         public const string MovieSet = "MovieSet";
