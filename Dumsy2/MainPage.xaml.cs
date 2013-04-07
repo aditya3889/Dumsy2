@@ -115,8 +115,10 @@ namespace Dumsy2
         {
             string language = languages[this.SelectedLanguage.SelectedIndex].ToString();
             string difficultyLevel = difficulty[this.SelectedDifficulty.SelectedIndex].ToString();
-            Helpers.SetValueToStorage(Constants.DifficultySetting, difficultyLevel);
+            string timerLevel = difficulty[this.SelectedTimer.SelectedIndex].ToString();
             Helpers.SetValueToStorage(Constants.LanguageSetting, language);
+            Helpers.SetValueToStorage(Constants.DifficultySetting, difficultyLevel);
+            Helpers.SetValueToStorage(Constants.TimerSetting, timerLevel);
 
             this.Panorama.SetValue(Panorama.SelectedItemProperty, this.Panorama.Items[0]);
             Panorama temp = this.Panorama;
@@ -173,7 +175,25 @@ namespace Dumsy2
                 }
             }
 
+            if (timer == null)
+            {
+                timer = new List<string>();
+                timer.Add("Relaxed");
+                timer.Add("Standard");
+                timer.Add("Custom");
 
+                this.SelectedTimer.ItemsSource = timer;
+
+                var timerLevel = Helpers.GetInfoFromMemory(Constants.TimerSetting);
+                if (timerLevel != null)
+                {
+                    int index = timer.IndexOf(timerLevel.ToString());
+                    if (index >= 0 && index < difficulty.Count)
+                    {
+                        this.SelectedTimer.SelectedIndex = index;
+                    }
+                }
+            }
 
             if (movieSet == null)
             {
@@ -226,6 +246,7 @@ namespace Dumsy2
         }
 
         System.Collections.ObjectModel.ObservableCollection<string> languages = null;
+        List<string> timer = null;
         List<string> difficulty = null;
         List<Movie> movieSet = null;
         Movie selectedMovie = null;

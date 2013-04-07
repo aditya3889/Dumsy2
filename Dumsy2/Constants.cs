@@ -17,6 +17,7 @@ namespace Dumsy2
 
         public const string LanguageSetting = "languagesetting";
         public const string DifficultySetting = "difficultysetting";
+        public const string TimerSetting = "timersetting";
 
         public const int WarningTime = 15;
 

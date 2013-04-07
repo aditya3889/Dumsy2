@@ -20,7 +20,7 @@
         <controls:Panorama Title="{StaticResource ApplicationTitle}" SelectionChanged="Panorama_SelectionChanged_1" Name="Panorama">
 
                 <!--Panorama item one-->
-            <controls:PanoramaItem Header="{StaticResource ApplicationTitle}" Name="MainPageItem">
+            <controls:PanoramaItem Name="MainPageItem">
                     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <Grid.RowDefinitions>
                         <RowDefinition Height ="100*"/>
@@ -32,7 +32,7 @@
                         <ColumnDefinition Width="100*"/>
                     </Grid.ColumnDefinitions>
                         <StackPanel Grid.ColumnSpan="2">
-                            <TextBlock x:Name="MovieName" FontSize="{StaticResource PhoneFontSizeLarge}" TextWrapping="Wrap" Grid.Row="0" HorizontalAlignment="Center" Text=""/>
+                            <TextBlock x:Name="MovieName" FontSize="{StaticResource PhoneFontSizeExtraLarge}" TextWrapping="Wrap" Grid.Row="0" HorizontalAlignment="Center" Text=""/>
                             <HyperlinkButton x:Name="MoreInfo" FontSize="{StaticResource PhoneFontSizeMedium}" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,20,0" Content="More Info.." Visibility="Collapsed" Click="MoreInfo_Click"/>
                         <TextBlock x:Name="Genre" FontSize="{StaticResource PhoneFontSizeMedium}" TextWrapping="Wrap" Grid.Row="0" HorizontalAlignment="Center" Text=""/>
                         <TextBlock x:Name="Year" FontSize="{StaticResource PhoneFontSizeMedium}" TextWrapping="Wrap" Grid.Row="0" HorizontalAlignment="Center" Text=""/>
@@ -52,6 +52,10 @@
                     />
                     <toolkit:ListPicker
                     x:Name="SelectedDifficulty"
+                    ItemsSource="{Binding}"
+                    />
+                    <toolkit:ListPicker
+                    x:Name="SelectedTimer"
                     ItemsSource="{Binding}"
                     />
                 </StackPanel>
