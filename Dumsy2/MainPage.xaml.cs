@@ -32,7 +32,7 @@ namespace Dumsy2
                 {
                     Microsoft.Phone.Shell.ApplicationBarIconButton b = new Microsoft.Phone.Shell.ApplicationBarIconButton();
                     b.Text = "Next";
-                    b.IconUri = new Uri("Images/Light/appbar.next.rest.png", UriKind.Relative);
+                    b.IconUri = new Uri("Images/Light/appbar.transport.ff.rest.png", UriKind.Relative);
                     b.Click += Next_Click;
                     ApplicationBar.Buttons.Add(b);
 
@@ -46,7 +46,7 @@ namespace Dumsy2
                 {
                     Microsoft.Phone.Shell.ApplicationBarIconButton b = new Microsoft.Phone.Shell.ApplicationBarIconButton();
                     b.Text = "Next";
-                    b.IconUri = new Uri("Images/Dark/appbar.next.rest.png", UriKind.Relative);
+                    b.IconUri = new Uri("Images/Dark/appbar.transport.ff.rest.png", UriKind.Relative);
                     b.Click += Next_Click;
                     ApplicationBar.Buttons.Add(b);
 
@@ -86,8 +86,23 @@ namespace Dumsy2
             if (selectedMovie != null)
             {
                 startDatetime = DateTime.UtcNow;
-                endDateTime = startDatetime.Value.AddMinutes(2);
+                double time = 0.0;
+
+                if (SelectedTimer.SelectedIndex >= 0 && SelectedTimer.SelectedIndex <= timer.Count)
+                {
+                    if(timer[SelectedTimer.SelectedIndex].ToLower().Contains("swift"))
+                    {
+                        time = Constants.SwiftTime/60.0;
+                    }
+                    else
+                    {
+                        time = Constants.RelaxedTime/60.0;
+                    }
+                }
+
+                endDateTime = startDatetime.Value.AddMinutes(time);
                 Timer.Foreground =  new SolidColorBrush(Color.FromArgb(255,0,255,0));
+                Timer.Visibility = Visibility.Visible;
             }
         }
         void dt_Tick(object sender, EventArgs e)
@@ -103,6 +118,17 @@ namespace Dumsy2
                     int seconds = (int)((endDateTime.Value - DateTime.UtcNow).TotalSeconds);
                     if (seconds <= Constants.WarningTime)
                     {
+                        if (prevVisible)
+                        {
+                            Timer.Visibility = Visibility.Visible;
+                            mediaElement.Play();
+                        }
+                        else
+                        {
+                            Timer.Visibility = Visibility.Collapsed;
+                        }
+                        prevVisible = !prevVisible;
+
                         Timer.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
                     }
 
@@ -110,6 +136,8 @@ namespace Dumsy2
                 }
             }
         }
+
+        bool prevVisible = true;
 
         private void Save_Settings(object sender, EventArgs e)
         {
@@ -125,11 +153,15 @@ namespace Dumsy2
             LayoutRoot.Children.Remove(this.Panorama);
             LayoutRoot.Children.Add(temp);
             LayoutRoot.UpdateLayout();
+
+            Next_Click(sender, e);
         }
 
         private void PhoneApplicationPage_Loaded_1(object sender, RoutedEventArgs e)
         {
             SetApplicationBarButtons();
+
+            mediaElement.Source = new Uri("/Dumsy2;component/beep.wav");
 
             System.Windows.Threading.DispatcherTimer dt = new System.Windows.Threading.DispatcherTimer();
             dt.Interval = new TimeSpan(0, 0, 0, 0, 500); // 500 Milliseconds
@@ -178,9 +210,8 @@ namespace Dumsy2
             if (timer == null)
             {
                 timer = new List<string>();
-                timer.Add("Relaxed");
-                timer.Add("Standard");
-                timer.Add("Custom");
+                timer.Add("Swift (90s)");
+                timer.Add("Relaxed (180s)");
 
                 this.SelectedTimer.ItemsSource = timer;
 
@@ -188,7 +219,7 @@ namespace Dumsy2
                 if (timerLevel != null)
                 {
                     int index = timer.IndexOf(timerLevel.ToString());
-                    if (index >= 0 && index < difficulty.Count)
+                    if (index >= 0 && index < timer.Count)
                     {
                         this.SelectedTimer.SelectedIndex = index;
                     }
@@ -229,6 +260,8 @@ namespace Dumsy2
                             {
                                 movieSet = (List<Movie>)(movies);
                             }
+
+                            Next_Click(sender, e);
                         });
                         Thread.Sleep(0);
                     });
@@ -246,7 +279,7 @@ namespace Dumsy2
         }
 
         System.Collections.ObjectModel.ObservableCollection<string> languages = null;
-        List<string> timer = null;
+        List<String> timer = null;
         List<string> difficulty = null;
         List<Movie> movieSet = null;
         Movie selectedMovie = null;
@@ -267,10 +300,19 @@ namespace Dumsy2
                 {
                     this.MovieName.Text = selectedMovie.Title;
                     this.MoreInfo.Visibility = Visibility.Visible;
-                    this.Year.Text = String.Empty;
+                    //this.Year.Text = String.Empty;
                     this.Genre.Text = String.Empty;
                     this.Cast.Text = String.Empty;
+                    this.MovieName.FontSize = 40 + 400/MovieName.Text.Length;
+
+                    if (this.MovieName.FontSize > 100)
+                        MovieName.FontSize = 100;
+                    if (this.MovieName.FontSize < 50)
+                        this.MovieName.FontSize = 50;
+
+                    Timer.Visibility = Visibility.Collapsed;
                 }
+                
             }
         }
 
@@ -279,7 +321,7 @@ namespace Dumsy2
             if (selectedMovie != null)
             {
                 this.MoreInfo.Visibility = Visibility.Collapsed;
-                this.Year.Text = Constants.Year + ": " + selectedMovie.YearOfRelease;
+                //this.Year.Text = Constants.Year + ": " + selectedMovie.YearOfRelease;
                 this.Genre.Text = Constants.Genre + ": " + selectedMovie.Genre;
                 this.Cast.Text = Constants.Cast + ": " + selectedMovie.Cast.Trim();
             }
@@ -291,5 +333,7 @@ namespace Dumsy2
         {
             SetApplicationBarButtons();
         }
+
+        MediaElement mediaElement = new MediaElement();
     }
 }

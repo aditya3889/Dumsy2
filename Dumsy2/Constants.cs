@@ -20,6 +20,8 @@ namespace Dumsy2
         public const string TimerSetting = "timersetting";
 
         public const int WarningTime = 15;
+        public const int SwiftTime = 90;
+        public const int RelaxedTime = 180;
 
         public const int CurrentMovieVersion = 1;
         public const string MovieVersion = "MovieVersion";

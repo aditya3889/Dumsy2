@@ -92,11 +92,16 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="beep.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Images\Dark\appbar.next.rest.png" />
     <Content Include="Images\Dark\appbar.save.rest.png" />
+    <Content Include="Images\Dark\appbar.transport.ff.rest.png" />
     <Content Include="Images\Dark\appbar.transport.play.rest.png" />
     <Content Include="Images\Light\appbar.next.rest.png" />
     <Content Include="Images\Light\appbar.save.rest.png" />
+    <Content Include="Images\Light\appbar.transport.ff.rest.png" />
     <Content Include="Images\Light\appbar.transport.play.rest.png" />
     <Content Include="Libraries\Microsoft.Phone.Controls.dll" />
     <Content Include="Libraries\Microsoft.Phone.Controls.Toolkit.dll" />
